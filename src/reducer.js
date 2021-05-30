@@ -47,6 +47,20 @@ const reducer = (state, action) => {
       amount: cartTotal.amount,
     };
   }
+
+  if (action.type === "LOADING") {
+    return {
+      ...state,
+      isLoading: action.value,
+    };
+  }
+
+  if (action.type === "DISPLAY_DATA") {
+    return {
+      ...state,
+      cart: action.value,
+    };
+  }
 };
 
 export default reducer;

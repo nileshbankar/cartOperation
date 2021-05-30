@@ -8,13 +8,26 @@ const AppContext = React.createContext();
 
 const defaultValues = {
   isLoading: false,
-  cart: cartItems,
+  cart: [],
   total: 0,
   amount: 0,
 };
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultValues);
+
+  // Fetch data from API
+  const fetchData = async () => {
+    dispatch({ type: "LOADING", value: true });
+
+    const response = await fetch(url);
+    if (!response.ok) return console.error("Error in fetching data from API");
+    const data = await response.json();
+    if (data) {
+      dispatch({ type: "LOADING", value: false });
+      dispatch({ type: "DISPLAY_DATA", value: data });
+    }
+  };
 
   // Remove all item in cart
   const handleClearCart = () => {
@@ -36,6 +49,11 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     dispatch({ type: "GET_TOTAL" });
   }, [state.cart]);
+
+  // Fetch data after render
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <AppContext.Provider
