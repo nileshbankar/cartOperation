@@ -10,7 +10,7 @@ const reducer = (state, action) => {
   if (action.type === "INCREASE_CART_QTY") {
     const cart = state.cart;
     const newCart = cart.map((item) => {
-      if (item.id.toLower() === action.valuetoLower()) {
+      if (item.id.toLowerCase() === action.valuetoLowerCase()) {
         return { ...item, amount: item.amount++ };
       }
       return item;
@@ -21,7 +21,7 @@ const reducer = (state, action) => {
     const cart = state.cart;
     const newCart = cart
       .map((item) => {
-        if (item.id.toLower() === action.value.toLower()) {
+        if (item.id.toLowerCase() === action.value.toLowerCase()) {
           if (item.amount === 0) return {};
           else return { ...item, amount: item.amount-- };
         }
