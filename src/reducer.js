@@ -3,11 +3,13 @@ const reducer = (state, action) => {
     return { ...state, cart: [] };
   }
   if (action.type === "REMOVE_SINGLE_ITEM") {
-    const newCart = state.cart.filter((item) => item.id !== +action.value);
+    const cart = state.cart;
+    const newCart = cart.filter((item) => item.id !== action.value);
     return { ...state, cart: newCart };
   }
   if (action.type === "INCREASE_CART_QTY") {
-    const newCart = state.cart.map((item) => {
+    const cart = state.cart;
+    const newCart = cart.map((item) => {
       if (item.id === action.value) {
         return { ...item, amount: item.amount++ };
       }
@@ -16,7 +18,8 @@ const reducer = (state, action) => {
     return { ...state, cart: newCart };
   }
   if (action.type === "DECREASE_CART_QTY") {
-    const newCart = state.cart
+    const cart = state.cart;
+    const newCart = cart
       .map((item) => {
         if (item.id === action.value) {
           if (item.amount === 0) return {};
